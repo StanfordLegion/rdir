@@ -314,8 +314,8 @@ local function loops_are_compatible(cx, loop_nid)
   local nid1 = label1:is(flow.node.data) and find_last_instance(block_cx, label1)
   local nid2 = label2:is(flow.node.data) and find_last_instance(block_cx, label2)
 
-  return not nid1 or #block_cx.graph:incoming_mutate_set(nid1) == 0 and
-    not nid2 or #block_cx.graph:incoming_mutate_set(nid2) == 0
+  return (not nid1 or #block_cx.graph:incoming_mutate_set(nid1) == 0) and
+    (not nid2 or #block_cx.graph:incoming_mutate_set(nid2) == 0)
 end
 
 local function can_spmdize(cx, loop)
