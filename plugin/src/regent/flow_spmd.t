@@ -50,6 +50,8 @@ local report = require("common/report")
 local std = require("regent/std")
 local vectorize_loops = require("regent/vectorize_loops")
 
+local spmd_mapping = require("regent/flow_mapping")
+
 -- Configuration Variables
 
 -- Setting this flag configures the number of SPMD tasks assigned to
@@ -6047,6 +6049,8 @@ local function issue_global_vars_creation_forlist(cx, loop_nid, nparts_nid,
       values = terralib.newlist({
         ast.typed.expr.ListIspace {
           ispace = bound_label.value,
+          mapping = spmd_mapping.fn,
+          key_type = spmd_mapping.key_type,
           expr_type = part_indices_type,
           annotations = ast.default_annotations(),
           span = span,
