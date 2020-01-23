@@ -128,7 +128,7 @@ function region_tree:add_region(region_type, symbol, var_type, annotations, span
 
   local value_type = std.as_read(var_type)
   if not is_point and std.is_region(value_type) then
-    local partition = std.partition(std.disjoint, symbol)
+    local partition = std.partition(std.disjoint, std.complete, symbol)
     self.region_point_partitions[region_type] = partition
     std.add_constraint(self, partition, region_type, std.subregion, false)
     self:intern_region_expr(partition, annotations, span)
