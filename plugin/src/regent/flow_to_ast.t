@@ -595,6 +595,8 @@ function flow_to_ast.node_task(cx, nid)
     fn = fn,
     args = args,
     conditions = conditions,
+    predicate = false,
+    predicate_else_value = false,
     replicable = label.replicable,
     expr_type = label.expr_type,
     annotations = label.annotations,
