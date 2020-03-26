@@ -43,6 +43,7 @@ local optimize_divergence = require("regent/optimize_divergence")
 local optimize_futures = require("regent/optimize_futures")
 local optimize_index_launches = require("regent/optimize_index_launches")
 local optimize_mapping = require("regent/optimize_mapping")
+local optimize_predicate = require("regent/optimize_predicate")
 local optimize_traces = require("regent/optimize_traces")
 local passes_hooks = require("regent/passes_hooks")
 local pretty = require("regent/pretty")
@@ -2326,6 +2327,7 @@ do
     -- passes.optimize(ast)
     if std.config["index-launch"] then ast = optimize_index_launches.entry(ast) end
     if std.config["future"] then ast = optimize_futures.entry(ast) end
+    if std.config["predicate"] then ast = optimize_predicate.entry(ast) end
     if std.config["leaf"] or std.config["inner"] then ast = optimize_config_options.entry(ast) end
     print("FIXME: Mapping optimization disabled while generating empty task")
     -- if std.config["mapping"] then ast = optimize_mapping.entry(ast) end
