@@ -428,6 +428,7 @@ local function extract_task(cx, nid, prefix, force_read_write)
       idempotent = false,
       replicable = false,
     },
+    region_usage = false,
     region_divergence = false,
     metadata = false,
     prototype = task,
