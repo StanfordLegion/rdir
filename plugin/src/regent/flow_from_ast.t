@@ -1402,6 +1402,10 @@ function analyze_privileges.expr_raw_fields(cx, node, privilege_map)
   return analyze_privileges.expr_region_root(cx, node.region, none)
 end
 
+function analyze_privileges.expr_raw_future(cx, node, privilege_map)
+  return analyze_privileges.expr(cx, node.value, none)
+end
+
 function analyze_privileges.expr_raw_value(cx, node, privilege_map)
   return analyze_privileges.expr(cx, node.value, none)
 end
@@ -1727,6 +1731,9 @@ function analyze_privileges.expr(cx, node, privilege_map)
 
   elseif node:is(ast.typed.expr.RawFields) then
     return analyze_privileges.expr_raw_fields(cx, node, privilege_map)
+
+  elseif node:is(ast.typed.expr.RawFuture) then
+    return analyze_privileges.expr_raw_future(cx, node, privilege_map)
 
   elseif node:is(ast.typed.expr.RawPhysical) then
     return analyze_privileges.expr_raw_physical(cx, node, privilege_map)
@@ -2567,6 +2574,15 @@ function flow_from_ast.expr_raw_fields(cx, node, privilege_map, init_only)
     privilege_map)
 end
 
+function flow_from_ast.expr_raw_value(cx, node, privilege_map, init_only)
+  local value = flow_from_ast.expr(cx, node.value, name(node.value.expr_type))
+  return as_opaque_expr(
+    cx,
+    function(v1) return node { value = v1 } end,
+    terralib.newlist({value}),
+    privilege_map)
+end
+
 function flow_from_ast.expr_raw_physical(cx, node, privilege_map, init_only)
   local region = flow_from_ast.expr(cx, node.region, reads_writes)
   return as_opaque_expr(
@@ -3062,6 +3078,9 @@ function flow_from_ast.expr(cx, node, privilege_map, init_only)
 
   elseif node:is(ast.typed.expr.RawFields) then
     return flow_from_ast.expr_raw_fields(cx, node, privilege_map, init_only)
+
+  elseif node:is(ast.typed.expr.RawFuture) then
+    return flow_from_ast.expr_raw_future(cx, node, privilege_map, init_only)
 
   elseif node:is(ast.typed.expr.RawPhysical) then
     return flow_from_ast.expr_raw_physical(cx, node, privilege_map, init_only)
