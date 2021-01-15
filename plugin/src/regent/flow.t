@@ -1,5 +1,5 @@
 -- Copyright (c) 2015, NVIDIA CORPORATION. All rights reserved.
--- Copyright (c) 2015-2018, Stanford University. All rights reserved.
+-- Copyright (c) 2015-2021, Stanford University. All rights reserved.
 --
 -- This file was initially released under the BSD license, shown
 -- below. All subsequent contributions are dual-licensed under the BSD
